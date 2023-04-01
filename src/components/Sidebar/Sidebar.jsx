@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react';
-import { Divider, List, ListItem, ListItemText, ListSubheader, ListItemIcon, Box, CircularProgress } from '@mui/material';
+import { Divider, Typography, List, ListItem, ListItemText, ListSubheader, ListItemIcon, Box, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
 import useStyle from './styles';
+import { useGetGenreQuery } from '../../services/TMDB';
 
 function Sidebar({ setMobileOpen }) {
+  const { data, isFetching } = useGetGenreQuery();
+  console.log(data);
   const categories = [
     { label: 'Popular', value: 'popular' },
     { label: 'Top Rated', value: 'top-rated' },
     { label: 'Upcoming', value: 'upcoming' },
   ];
-  const demoCategories = [
-    { label: 'Comedy', value: 'comedy' },
-    { label: 'Action', value: 'action' },
-    { label: 'Horror', value: 'horror' },
-    { label: 'Animation', value: 'animation' },
-  ];
+  // const demoCategories = [
+  //   { label: 'Comedy', value: 'comedy' },
+  //   { label: 'Action', value: 'action' },
+  //   { label: 'Horror', value: 'horror' },
+  //   { label: 'Animation', value: 'animation' },
+  // ];
 
     const redLogo = 'https://fontmeme.com/permalink/230314/cebecbc615492b2f158a0ce50f29bf67.png';
     const blueLogo = 'https://fontmeme.com/permalink/230314/ef59dbde24f88842b204cf2321065358.png';
@@ -47,13 +50,19 @@ function Sidebar({ setMobileOpen }) {
         <Divider />
         <List>
           <ListSubheader>Genre</ListSubheader>
-          {demoCategories.map(({ label, value }) => (
-            <Link key={value} className={classes.links} to="/">
+          {isFetching ? (
+            <Box display="flex" justifyContent="center">
+              <CircularProgress />
+            </Box>
+          )
+          : data.genres.map(({ name, id }) => (
+            <Link key={id} className={classes.links} to="/">
               <ListItem onClick={() => {}} button>
                 {/* <ListItemIcon>
                   <img src={redLogo} className={classes.genreImages} height={30} alt="iconimg" />
                 </ListItemIcon> */}
-                <ListItemText primary={label} />
+
+                <ListItemText primary={name} />
               </ListItem>
             </Link>
           ))}
