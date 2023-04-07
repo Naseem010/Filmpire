@@ -14,7 +14,7 @@ const categories = [
 
 function Sidebar({ setMobileOpen }) {
   const { data, isFetching } = useGetGenreQuery();
-  // console.log(data);
+  console.log(data);
 
     const redLogo = 'https://fontmeme.com/permalink/230314/cebecbc615492b2f158a0ce50f29bf67.png';
     const blueLogo = 'https://fontmeme.com/permalink/230314/ef59dbde24f88842b204cf2321065358.png';
